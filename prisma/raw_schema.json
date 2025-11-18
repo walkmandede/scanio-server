@@ -1,0 +1,89 @@
+{
+  "Vendor": {
+    "id": "Int @id @default(autoincrement())",
+    "name": "String",
+    "slogan": "String?",
+    "address": "String?",
+    "logo": "String?",
+    "webPageKey": "String @unique",
+    "isActive": "Boolean @default(true)",
+    "banners": "Banner[]",
+    "categories": "Category[]",
+    "brands": "Brand[]",
+    "products": "Product[]",
+    "users": "User[]"
+  },
+
+  "User": {
+    "id": "Int @id @default(autoincrement())",
+    "vendorId": "Int",
+    "name": "String",
+    "email": "String @unique",
+    "passwordHash": "String",
+    "role": "String @default(\"admin\")",
+    "isActive": "Boolean @default(true)",
+    "vendor": "Vendor @relation(fields: [vendorId], references: [id])"
+  },
+
+  "Banner": {
+    "id": "Int @id @default(autoincrement())",
+    "vendorId": "Int",
+    "title": "String?",
+    "subtitle": "String?",
+    "content": "String?",
+    "image": "String?",
+    "isActive": "Boolean @default(true)",
+    "vendor": "Vendor @relation(fields: [vendorId], references: [id])"
+  },
+
+  "Category": {
+    "id": "Int @id @default(autoincrement())",
+    "vendorId": "Int",
+    "name": "String",
+    "description": "String?",
+    "thumbnail": "String?",
+    "sortOrder": "Int @default(0)",
+    "vendor": "Vendor @relation(fields: [vendorId], references: [id])",
+    "products": "Product[]"
+  },
+
+  "Brand": {
+    "id": "Int @id @default(autoincrement())",
+    "vendorId": "Int",
+    "name": "String",
+    "description": "String?",
+    "thumbnail": "String?",
+    "vendor": "Vendor @relation(fields: [vendorId], references: [id])",
+    "products": "Product[]"
+  },
+
+  "Product": {
+    "id": "Int @id @default(autoincrement())",
+    "vendorId": "Int",
+    "brandId": "Int?",
+    "categoryId": "Int?",
+    "name": "String",
+    "description": "String?",
+    "basePrice": "Float",
+    "salePrice": "Float",
+    "isActive": "Boolean @default(true)",
+    "isHidden": "Boolean @default(false)",
+    "images": "String[]",
+    "vendor": "Vendor @relation(fields: [vendorId], references: [id])",
+    "brand": "Brand @relation(fields: [brandId], references: [id])",
+    "category": "Category @relation(fields: [categoryId], references: [id])",
+    "variants": "ProductVariant[]"
+  },
+
+  "ProductVariant": {
+    "id": "Int @id @default(autoincrement())",
+    "productId": "Int",
+    "name": "String?",
+    "description": "String?",
+    "basePrice": "Float",
+    "salePrice": "Float",
+    "isActive": "Boolean @default(true)",
+    "isHidden": "Boolean @default(false)",
+    "product": "Product @relation(fields: [productId], references: [id])"
+  }
+}

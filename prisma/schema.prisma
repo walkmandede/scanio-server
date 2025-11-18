@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Vendor {
+  id          Int             @id @default(autoincrement())
+  name        String
+  slogan      String?
+  address     String?
+  logo        String?
+  webPageKey  String          @unique
+  isActive    Boolean         @default(true)
+
+  banners     Banner[]        // Cascade deletion handled in Banner
+  categories  Category[]      // Cascade deletion handled in Category
+  brands      Brand[]         // Cascade deletion handled in Brand
+  products    Product[]       // Cascade deletion handled in Product
+  users       User[]          // Cascade deletion handled in User
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  vendorId     Int
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("admin")
+  isActive     Boolean  @default(true)
+
+  vendor       Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+}
+
+model Banner {
+  id        Int     @id @default(autoincrement())
+  vendorId  Int
+  title     String?
+  subtitle  String?
+  content   String?
+  image     String?
+  isActive  Boolean @default(true)
+
+  vendor    Vendor  @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  vendorId    Int
+  name        String
+  description String?
+  thumbnail   String?
+
+  vendor      Vendor    @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  products    Product[]
+
+  @@unique([vendorId, name])
+}
+
+model Brand {
+  id          Int       @id @default(autoincrement())
+  vendorId    Int
+  name        String
+  description String?
+  thumbnail   String?
+
+  vendor      Vendor    @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  products    Product[]
+
+  @@unique([vendorId, name])
+}
+
+model Product {
+  id          Int              @id @default(autoincrement())
+  vendorId    Int
+  brandId     Int?
+  categoryId  Int?
+
+  name        String
+  description String?
+  basePrice   Float
+  salePrice   Float
+  isActive    Boolean          @default(true)
+  isHidden    Boolean          @default(false)
+  images      String[]
+
+  vendor      Vendor           @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  brand       Brand?           @relation(fields: [brandId], references: [id])
+  category    Category?        @relation(fields: [categoryId], references: [id])
+
+  variants    ProductVariant[]
+
+  @@unique([vendorId, brandId], map: "Product_brand_vendor_guard")
+  @@unique([vendorId, categoryId], map: "Product_category_vendor_guard")
+}
+
+model ProductVariant {
+  id          Int      @id @default(autoincrement())
+  productId   Int
+  name        String?
+  description String?
+  basePrice   Float
+  salePrice   Float
+  isActive    Boolean  @default(true)
+  isHidden    Boolean  @default(false)
+
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}

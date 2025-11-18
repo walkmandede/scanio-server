@@ -1,0 +1,39 @@
+{
+  "name": "scanio-server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "app:start": "node ./src/app.js",
+    "app:dev": "cross-env NODE_ENV=development nodemon ./src/app.js",
+    "app:prod": "cross-env NODE_ENV=production nodemon ./src/app.js",
+    "prisma:generate:dev": "dotenv -e .env/.env.development.local -- npx prisma generate dev",
+    "prisma:generate:prod": "dotenv -e .env/.env.production.local -- npx prisma generate deploy",
+    "prisma:migrate:dev": "dotenv -e .env/.env.development.local -- npx prisma migrate dev",
+    "prisma:migrate:prod": "dotenv -e .env/.env.production.local -- npx prisma migrate deploy",
+    "prisma:migrate-reset": "dotenv -e .env/.env.production.local -- npx prisma migrate reset",
+    "prisma:db:push:dev": "prisma db push --env-file=.env/.env.development.local",
+    "prisma:studio:dev": "prisma studio --env-file=.env/.env.development.local"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.0",
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.1",
+    "pg": "^8.16.3",
+    "prisma": "^6.19.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^24.10.0",
+    "cross-env": "^10.1.0",
+    "dotenv-cli": "^11.0.0",
+    "globals": "^16.5.0",
+    "nodemon": "^3.1.10",
+    "undefined": "^0.1.0"
+  }
+}
