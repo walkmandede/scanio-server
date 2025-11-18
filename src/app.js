@@ -13,6 +13,7 @@ const app = express();
 const apiPrefix = "/api/v1";
 
 //uses
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
