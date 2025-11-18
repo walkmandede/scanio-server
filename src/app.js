@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { PORT, NODE_ENV, DATABASE_URL } from "./config/env.js";
 import superLog from "./utils/super_log.js";
 import { errorHandler } from "./middlewares/error_handler.middleware.js";
