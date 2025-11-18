@@ -37,7 +37,7 @@ superLog(`PROJ_ENV: ${NODE_ENV}`);
 
 app.listen(PORT, async () => {
   console.log(`Server is running in http://localhost:${PORT}/`);
-  console.log(DATABASE_URL);
+  console.log(`DB is ${DATABASE_URL}`);
 });
 
 //errors
