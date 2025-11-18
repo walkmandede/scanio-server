@@ -59,3 +59,11 @@ typings/
 
 # next.js build output
 .next
+
+# Environment files
+.env.development
+.env.production
+.env
+
+# Prisma
+/generated

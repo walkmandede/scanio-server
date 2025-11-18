@@ -1,5 +1,5 @@
 import express from "express";
-import { PORT, NODE_ENV } from "./config/env.js";
+import { PORT, NODE_ENV, DATABASE_URL } from "./config/env.js";
 import superLog from "./utils/super_log.js";
 import { errorHandler } from "./middlewares/error_handler.middleware.js";
 
@@ -32,6 +32,7 @@ superLog(`PROJ_ENV: ${NODE_ENV}`);
 
 app.listen(PORT, async () => {
   console.log(`Server is running in http://localhost:${PORT}/`);
+  console.log(DATABASE_URL);
 });
 
 //errors

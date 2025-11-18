@@ -6,14 +6,15 @@
   "scripts": {
     "app:start": "node ./src/app.js",
     "app:dev": "cross-env NODE_ENV=development nodemon ./src/app.js",
-    "app:prod": "cross-env NODE_ENV=production nodemon ./src/app.js",
-    "prisma:generate:dev": "dotenv -e .env/.env.development.local -- npx prisma generate dev",
-    "prisma:generate:prod": "dotenv -e .env/.env.production.local -- npx prisma generate deploy",
-    "prisma:migrate:dev": "dotenv -e .env/.env.development.local -- npx prisma migrate dev",
-    "prisma:migrate:prod": "dotenv -e .env/.env.production.local -- npx prisma migrate deploy",
-    "prisma:migrate-reset": "dotenv -e .env/.env.production.local -- npx prisma migrate reset",
-    "prisma:db:push:dev": "prisma db push --env-file=.env/.env.development.local",
-    "prisma:studio:dev": "prisma studio --env-file=.env/.env.development.local"
+    "app:prod": "cross-env NODE_ENV=production node ./src/app.js",
+    "prisma:generate": "npx prisma generate",
+    "prisma:migrate:dev": "npx prisma migrate dev",
+    "prisma:migrate:prod": "npx prisma migrate deploy",
+    "prisma:studio": "npx prisma studio",
+    "docker:dev": "docker-compose --env-file .env.development up --build",
+    "docker:prod": "docker-compose --env-file .env.production up --build",
+    "docker:stop": "docker-compose down",
+    "docker:clean": "docker-compose down -v"
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",

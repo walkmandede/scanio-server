@@ -1,6 +1,12 @@
 import { config } from "dotenv";
 
-config({ path: `.env/.env.${process.env.NODE_ENV || "development"}.local` });
+// Load .env.development or .env.production based on NODE_ENV
+const envFile =
+  process.env.NODE_ENV === "production"
+    ? ".env.production"
+    : ".env.development";
 
-export const { PORT, DB_URL, NODE_ENV, JWT_SECRET, JWT_EXPIRES_IN } =
+config({ path: envFile });
+
+export const { PORT, DATABASE_URL, NODE_ENV, JWT_SECRET, JWT_EXPIRES_IN } =
   process.env;
