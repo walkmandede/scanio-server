@@ -14,6 +14,7 @@ const apiPrefix = "/api/v1";
 
 //uses
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //landing route
 
@@ -35,7 +36,7 @@ app.use(`${apiPrefix}/product`, productRouter);
 //checkers
 superLog(`PROJ_ENV: ${NODE_ENV}`);
 
-app.listen(PORT, async () => {
+app.listen(PORT, "0.0.0.0", async () => {
   console.log(`Server is running in http://localhost:${PORT}/`);
   console.log(`DB is ${DATABASE_URL}`);
 });
