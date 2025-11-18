@@ -7,5 +7,8 @@ const authRouter = new express.Router();
 authRouter.route("/register").post(register);
 authRouter.route("/login").post(login);
 authRouter.route("/profile").get(authMiddleware, getProfile);
+authRouter.route("/test").get((req, res, next) => {
+  res.send({ status: true, message: "Welcome to Subscription Tracker API []" });
+});
 
 export default authRouter;
