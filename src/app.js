@@ -16,8 +16,13 @@ const apiPrefix = "/api/v1";
 app.use(express.json());
 
 //landing route
-app.get(`${apiPrefix}`, (req, res) => {
+
+app.get("", (req, res) => {
   res.send({ status: true, message: "Welcome to Subscription Tracker" });
+});
+
+app.get(`${apiPrefix}`, (req, res) => {
+  res.send({ status: true, message: "Welcome to Subscription Tracker API" });
 });
 
 //api routes
