@@ -14,7 +14,10 @@
     "docker:dev": "docker-compose --env-file .env.development up --build",
     "docker:prod": "docker-compose --env-file .env.production up --build",
     "docker:stop": "docker-compose down",
-    "docker:clean": "docker-compose down -v"
+    "docker:clean": "docker-compose down -v",
+    "start": "npx prisma generate && npx prisma migrate deploy && node ./src/app.js",
+    "build": "npx prisma generate",
+    "dev": "cross-env NODE_ENV=development nodemon ./src/app.js"
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",
